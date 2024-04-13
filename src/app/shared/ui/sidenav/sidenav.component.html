@@ -1,0 +1,16 @@
+<div class="w-[260px] bg-white flex">
+  <ul class="flex-1">
+    @for (menuItem of menu; track menuItem) {
+      <li
+        class="relative before:content-[''] before:absolute before:w-5 before:bg-black before:h-0.5 before:left-0 before:top-[50%]"
+      >
+        <span class="px-8 py-2.5 mt-4 mb-2 block text-xs text-black">{{
+          menuItem.title
+        }}</span>
+      </li>
+      @for (item of menuItem.items; track item) {
+        <li app-sidenav-item [menuItem]="item" class="my-0.5"></li>
+      }
+    }
+  </ul>
+</div>

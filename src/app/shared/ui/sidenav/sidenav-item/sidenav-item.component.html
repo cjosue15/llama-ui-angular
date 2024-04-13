@@ -1,0 +1,66 @@
+<a
+  class="px-4 py-2.5 mx-4 flex items-center justify-between rounded-md hover:bg-black/10 transition-colors duration-500 ease-in-out cursor-pointer"
+  routerLinkActive="bg-black text-white"
+  [routerLink]="menuItem.link"
+  (click)="toggleOpen()"
+>
+  <div class="flex gap-x-3 items-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M17 17h-11v-14h-2" />
+      <path d="M6 5l14 1l-1 7h-13" />
+    </svg>
+    <span class="text-sm">{{ menuItem.title }}</span>
+  </div>
+
+  @if (menuItem.children && menuItem.children.length > 0) {
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+      [@chevronRotate]="state()"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M9 6l6 6l-6 6" />
+    </svg>
+  }
+</a>
+
+@if (menuItem.children && menuItem.children.length > 0) {
+  <ul [@menuExpansion]="state()" class="overflow-hidden">
+    @for (subitem of menuItem.children; track subitem) {
+      <li class="my-0.5">
+        <a
+          class="px-4 py-2.5 mx-4 flex items-center justify-between rounded-md hover:bg-black/10 transition-colors duration-500 ease-in-out"
+        >
+          <div class="flex items-center gap-x-3">
+            <div class="size-5 flex items-center justify-center">
+              <div class="size-1.5 bg-black rounded-full"></div>
+            </div>
+            <span class="text-sm">{{ subitem.title }}</span>
+          </div>
+        </a>
+      </li>
+    }
+  </ul>
+}
