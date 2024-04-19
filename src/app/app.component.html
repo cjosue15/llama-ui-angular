@@ -1,10 +1,16 @@
-<div class="flex flex-1 h-screen overflow-hidden">
-  <app-sidenav class="h-full overflow-y-scroll block" />
-  <div class="flex-1 h-full overflow-y-scroll">
-    <app-header class="block mx-5 overflow-hidden rounded-lg sticky top-5" />
-    <main class="mt-5 p-5">
-      <div class="h-[2000px] bg-green-100"></div>
+<div class="app-layout">
+  <app-sidenav />
+  <div
+    class="app-container"
+    [ngClass]="
+      sidenavState === 'expanded'
+        ? 'app-container--expanded'
+        : 'app-container--collapsed'
+    ">
+    <app-header />
+    <main>
       <router-outlet></router-outlet>
+      <div style="height: 2000px"></div>
     </main>
   </div>
 </div>

@@ -19,7 +19,7 @@ export const sidenavAnimations: {
     state('expanded', style({ transform: 'rotate(90deg)' })),
     transition(
       'expanded <=> collapsed, void => collapsed',
-      animate(SIDENAV_ANIMATION_TIMING),
+      animate(SIDENAV_ANIMATION_TIMING)
     ),
   ]),
   /** Animation that expands and collapses the panel content. */
@@ -31,7 +31,7 @@ export const sidenavAnimations: {
     state('expanded', style({ height: '*', visibility: '' })),
     transition(
       'expanded <=> collapsed, void => collapsed',
-      animate(SIDENAV_ANIMATION_TIMING),
+      animate(SIDENAV_ANIMATION_TIMING)
     ),
   ]),
 };
