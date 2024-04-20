@@ -12,7 +12,17 @@ export const SIDENAV_ANIMATION_TIMING = '225ms cubic-bezier(0.4,0.0,0.2,1)';
 export const sidenavAnimations: {
   readonly chevronRotate: AnimationTriggerMetadata;
   readonly menuExpansion: AnimationTriggerMetadata;
+  readonly sidenavChevron: AnimationTriggerMetadata;
 } = {
+  /** Animation that rotates the indicator arrow of the sidenav. */
+  sidenavChevron: trigger('sidenavChevron', [
+    state('collapsed, void', style({ transform: 'rotate(0deg)' })),
+    state('expanded', style({ transform: 'rotate(-180deg)' })),
+    transition(
+      '* => expanded, * => collapsed',
+      animate(SIDENAV_ANIMATION_TIMING)
+    ),
+  ]),
   /** Animation that rotates the indicator arrow. */
   chevronRotate: trigger('chevronRotate', [
     state('collapsed, void', style({ transform: 'rotate(0deg)' })),

@@ -6,32 +6,31 @@
   <div class="sidenav__brand">
     <h1>Llama UI</h1>
     <div class="sidenav__brand-chevron">
-      <button (click)="toggleSidenav()">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="stroke-white"
-          [@chevronRotate]="state">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M9 6l6 6l-6 6" />
-        </svg>
-      </button>
+      @if (state !== 'hidden') {
+        <button (click)="toggleSidenav()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="stroke-white"
+            [@sidenavChevron]="state">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M9 6l6 6l-6 6" />
+          </svg>
+        </button>
+      }
     </div>
   </div>
   <ul class="sidenav__menu">
     @for (menuItem of menu; track menuItem) {
       <li class="sidenav__menu-header">
-        <span
-          class="group-aria-[expanded='false']:invisible group-aria-[expanded='false']:opacity-0"
-          >{{ menuItem.title }}</span
-        >
+        <span>{{ menuItem.title }}</span>
       </li>
       @for (item of menuItem.items; track item) {
         <li app-sidenav-item [menuItem]="item"></li>

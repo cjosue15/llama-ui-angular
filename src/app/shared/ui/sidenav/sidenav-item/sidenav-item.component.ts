@@ -64,7 +64,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
           this.childIsActive.set(false);
           const urls = this.menuItem.children?.map(item => item.link) ?? [];
           if (urls.includes(value.url)) {
-            console.log('isInChild');
             this.state.set('expanded');
             this.childIsActive.set(true);
             this.changeDetectorRef.markForCheck();
@@ -81,6 +80,5 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   toggleOpen(): void {
     if (!this.menuItem.children || this.menuItem.children.length === 0) return;
     this.state.set(this.state() === 'expanded' ? 'collapsed' : 'expanded');
-    console.log(this.state());
   }
 }

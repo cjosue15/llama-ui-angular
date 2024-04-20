@@ -14,13 +14,15 @@ import { SidenavItemComponent } from './sidenav-item/sidenav-item.component';
   styleUrl: './sidenav.component.scss',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, SidenavItemComponent, NgClass],
-  animations: [sidenavAnimations.chevronRotate],
+  animations: [sidenavAnimations.sidenavChevron],
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'sidenav',
     '[class.sidenav--collapsed]': 'state === "collapsed"',
-    '[class.sidenav--expanded]': 'state === "expanded"',
+    '[class.sidenav--expanded]': 'state === "expanded" || state === "visible"',
     '[class.sidenav--hovered]': 'state === "hovered"',
+    '[class.sidenav--hidden]': 'state === "hidden"',
+    '[class.sidenav--visible]': 'state === "visible"',
   },
 })
 export class SidenavComponent {
@@ -172,14 +174,20 @@ export class SidenavComponent {
   }
 
   mouseLeave() {
-    console.log(this._layoutService.sidenavState());
     if (this._layoutService.sidenavState() !== 'hovered') return;
 
     this._layoutService.toggleSidenav('collapsed');
   }
 
   toggleSidenav() {
-    const state = this.state === 'expanded' ? 'collapsed' : 'expanded';
-    this._layoutService.toggleSidenav(state);
+    const state = this._layoutService.sidenavState();
+
+    if (state === 'visible') {
+      this._layoutService.toggleSidenav('hidden');
+      return;
+    }
+
+    const newState = this.state === 'expanded' ? 'collapsed' : 'expanded';
+    this._layoutService.toggleSidenav(newState);
   }
 }

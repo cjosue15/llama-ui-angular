@@ -5,6 +5,7 @@ import { SignalStore } from '../signal-store/signal-store.service';
 
 export interface LayoutState {
   sidenav: SidenavState;
+  isMobile: boolean;
 }
 
 @Injectable({
@@ -13,8 +14,10 @@ export interface LayoutState {
 export class LayoutService extends SignalStore<LayoutState> {
   sidenavState = this.select('sidenav');
 
+  isMobile = this.select('isMobile');
+
   constructor() {
-    super({ sidenav: 'expanded' });
+    super({ sidenav: 'expanded', isMobile: false });
   }
 
   toggleSidenav(state: SidenavState) {

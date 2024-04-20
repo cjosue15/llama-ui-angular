@@ -10,4 +10,9 @@ export type MenuItem = {
   children?: MenuItem[];
 };
 
-export type SidenavState = 'expanded' | 'collapsed' | 'hovered';
+export type SidenavState =
+  | 'expanded'
+  | 'collapsed'
+  | 'hovered'
+  | 'hidden'
+  | 'visible';
