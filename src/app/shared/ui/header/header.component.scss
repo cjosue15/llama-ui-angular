@@ -1,9 +1,16 @@
 .header {
+  border-radius: var(--rounded);
+  overflow: hidden;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  top: 1.25rem;
+  position: sticky;
   background: var(--color-white);
   min-height: 64px;
   display: flex;
   align-items: center;
   padding: 0 var(--padding);
+  box-shadow: var(--shadow);
 
   button {
     cursor: pointer;
