@@ -1,17 +1,16 @@
 .app {
+  &-layout {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
   &-container {
+    flex: 1 1 0%;
+    height: 100%;
+    overflow-y: scroll;
     transition: padding-left var(--transition-duration)
       var(--transition-function);
-
-    app-header {
-      border-radius: 0.5rem;
-      overflow: hidden;
-      display: block;
-      margin-left: 1.25rem;
-      margin-right: 1.25rem;
-      top: 1.25rem;
-      position: sticky;
-    }
 
     main {
       padding: 1.25rem;
