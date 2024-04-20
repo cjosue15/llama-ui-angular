@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject, effect } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -165,7 +165,19 @@ export class SidenavComponent {
     return this._layoutService.sidenavState();
   }
 
+  overlayInit = effect(() => {
+    if (this.state === 'visible') {
+      this._createOverlay();
+    } else {
+      this._removeOverlay();
+    }
+  });
+
   private _layoutService = inject(LayoutService);
+
+  private _overlay: HTMLDivElement | null = null;
+
+  private _overlayFn: () => void = () => {};
 
   mouseOver() {
     if (this._layoutService.sidenavState() !== 'collapsed') return;
@@ -189,5 +201,26 @@ export class SidenavComponent {
 
     const newState = this.state === 'expanded' ? 'collapsed' : 'expanded';
     this._layoutService.toggleSidenav(newState);
+  }
+
+  private _createOverlay() {
+    this._overlay = document.createElement('div');
+    document.body.style.overflow = 'hidden';
+    this._overlay.classList.add('sidenav-overlay');
+    this._overlayFn = () => {
+      this._layoutService.toggleSidenav('hidden');
+    };
+    this._overlay.addEventListener('click', this._overlayFn);
+    document.body.appendChild(this._overlay);
+  }
+
+  private _removeOverlay() {
+    if (this._overlay) {
+      document.body.style.overflow = '';
+      this._overlay.removeEventListener('click', this._overlayFn);
+      this._overlayFn = () => {};
+      this._overlay.remove();
+      this._overlay = null;
+    }
   }
 }

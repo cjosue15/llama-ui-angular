@@ -1,14 +1,5 @@
 .app {
-  &-layout {
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-  }
-
   &-container {
-    flex: 1 1 0%;
-    height: 100%;
-    overflow-y: scroll;
     transition: padding-left var(--transition-duration)
       var(--transition-function);
 

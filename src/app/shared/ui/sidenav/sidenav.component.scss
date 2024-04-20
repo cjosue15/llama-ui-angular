@@ -121,4 +121,11 @@
       }
     }
   }
+
+  &-overlay {
+    position: fixed;
+    cursor: pointer;
+    inset: 0;
+    background-color: rgba($color: var(--color-black-rgb), $alpha: 0.5);
+  }
 }
