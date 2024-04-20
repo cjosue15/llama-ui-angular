@@ -16,10 +16,18 @@ export const sidenavAnimations: {
 } = {
   /** Animation that rotates the indicator arrow of the sidenav. */
   sidenavChevron: trigger('sidenavChevron', [
-    state('collapsed, void', style({ transform: 'rotate(0deg)' })),
-    state('expanded', style({ transform: 'rotate(-180deg)' })),
+    state('collapsed,hidden', style({ visibility: 'hidden', opacity: 0 })),
+    state(
+      'hovered',
+      style({ transform: 'rotate(0deg)', visibility: 'visible', opacity: 1 })
+    ),
+    state(
+      'expanded,visible',
+      style({ transform: 'rotate(-180deg)', visibility: 'visible', opacity: 1 })
+    ),
     transition(
-      '* => expanded, * => collapsed',
+      // '* => *',
+      '* => expanded, * => collapsed, * => visible, * => hidden, * => hovered',
       animate(SIDENAV_ANIMATION_TIMING)
     ),
   ]),

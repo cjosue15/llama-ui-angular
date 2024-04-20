@@ -3,30 +3,7 @@
   [attr.aria-expanded]="state === 'expanded'"
   (mouseenter)="mouseOver()"
   (mouseleave)="mouseLeave()">
-  <div class="sidenav__brand">
-    <h1>Llama UI</h1>
-    <div class="sidenav__brand-chevron">
-      @if (state !== 'hidden') {
-        <button (click)="toggleSidenav()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="stroke-white"
-            [@sidenavChevron]="state">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M9 6l6 6l-6 6" />
-          </svg>
-        </button>
-      }
-    </div>
-  </div>
+  <app-sidenav-brand (chevronClicked)="toggleSidenav()" />
   <ul class="sidenav__menu">
     @for (menuItem of menu; track menuItem) {
       <li class="sidenav__menu-header">

@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, inject, effect } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { sidenavAnimations } from '@shared/animations';
@@ -7,13 +7,21 @@ import { Menu } from '@shared/interfaces/sidenav';
 import { LayoutService } from '@shared/data-access/layout/layout.service';
 
 import { SidenavItemComponent } from './sidenav-item/sidenav-item.component';
+import { SidenavBrandComponent } from './sidenav-brand/sidenav-brand.component';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, SidenavItemComponent, NgClass],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    SidenavItemComponent,
+    SidenavBrandComponent,
+    NgClass,
+    NgOptimizedImage,
+  ],
   animations: [sidenavAnimations.sidenavChevron],
   encapsulation: ViewEncapsulation.None,
   host: {
@@ -193,6 +201,8 @@ export class SidenavComponent {
 
   toggleSidenav() {
     const state = this._layoutService.sidenavState();
+
+    // if (state === 'hovered') return;
 
     if (state === 'visible') {
       this._layoutService.toggleSidenav('hidden');

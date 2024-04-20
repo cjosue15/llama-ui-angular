@@ -10,6 +10,7 @@
     transform var(--transition-duration) var(--transition-function);
   z-index: 10;
   width: 260px;
+  box-shadow: var(--shadow);
 
   $sidenav: &;
 
@@ -23,6 +24,14 @@
 
   &--collapsed {
     width: 99px;
+
+    #{$sidenav}__brand {
+      h1 {
+        opacity: 0;
+        visibility: hidden;
+        text-indent: -9999px;
+      }
+    }
 
     #{$sidenav}__menu {
       &-header {
@@ -49,41 +58,6 @@
           visibility: hidden;
           white-space: nowrap;
         }
-      }
-    }
-  }
-
-  &__brand {
-    position: relative;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    align-items: center;
-    height: 5rem;
-    display: flex;
-    margin-left: 1rem;
-    margin-right: 1rem;
-
-    h1 {
-      font-weight: 700;
-      font-size: 1.5rem;
-      line-height: 2rem;
-    }
-
-    &-chevron {
-      position: absolute;
-      right: -1.75rem;
-
-      button {
-        background-color: var(--primary);
-        border: 8px solid var(--bg-app);
-        color: var(--color-white);
-        border-radius: 50%;
-        justify-content: center;
-        align-items: center;
-        width: 1.5rem;
-        height: 1.5rem;
-        display: flex;
-        box-sizing: content-box;
       }
     }
   }
