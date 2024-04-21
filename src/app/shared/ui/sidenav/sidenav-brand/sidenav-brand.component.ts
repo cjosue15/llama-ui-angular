@@ -12,9 +12,10 @@ import { LayoutService } from '@shared/data-access/layout/layout.service';
       <picture>
         <img
           ngSrc="assets/images/llama.png"
-          width="42"
-          height="64"
-          alt="Llama UI" />
+          width="52"
+          height="74"
+          alt="Llama UI"
+          priority />
       </picture>
       <h1>Llama UI</h1>
     </div>
