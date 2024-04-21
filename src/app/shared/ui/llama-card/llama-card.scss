@@ -1,0 +1,11 @@
+.llama-card {
+  display: inline-block;
+  box-shadow: var(--shadow);
+  background: var(--color-white);
+  border-radius: var(--rounded);
+
+  &-content {
+    display: block;
+    padding: var(--padding);
+  }
+}
