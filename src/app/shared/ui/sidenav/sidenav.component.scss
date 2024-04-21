@@ -49,6 +49,10 @@
       }
 
       .llama-sidenav-item {
+        & > a {
+          width: calc(100% - 1rem);
+        }
+
         &__children {
           display: none;
         }
