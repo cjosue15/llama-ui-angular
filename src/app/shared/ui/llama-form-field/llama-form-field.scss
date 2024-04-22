@@ -1,0 +1,32 @@
+.llama-form-field {
+  display: inline-block;
+
+  .llama-label {
+    display: block;
+    margin-bottom: var(--spacing-1\.5);
+    font-size: var(--font-size-sm);
+  }
+
+  input {
+    border-radius: var(--rounded);
+    border-width: 1px;
+    background: none;
+    outline: none;
+
+    padding: 0 var(--spacing-3\.5);
+    height: var(--size-11);
+    min-width: var(--size-11);
+    font-size: var(--font-size-md);
+
+    transition:
+      border-color var(--transition-default-duration)
+        var(--transition-default-function),
+      box-shadow var(--transition-default-duration)
+        var(--transition-default-function);
+
+    &:is(:focus, :hover) {
+      box-shadow: 0 0 0 1px var(--primary);
+      border-color: var(--primary);
+    }
+  }
+}
