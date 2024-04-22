@@ -16,7 +16,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "app",
+            "prefix": "llama",
             "style": "camelCase"
           }
         ],
@@ -24,10 +24,12 @@
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": "llama",
             "style": "kebab-case"
           }
         ],
+        "@angular-eslint/component-class-suffix": "off",
+        "@angular-eslint/directive-class-suffix": "off",
         "@angular-eslint/no-host-metadata-property": "off"
       }
     },
