@@ -1,0 +1,73 @@
+.llama-button {
+  --size-10: 2.5rem;
+  --font-size-sm: 0.875rem;
+  --spacing-4: 1rem;
+
+  --size-8: 2rem;
+  --font-size-xs: 0.75rem;
+  --spacing-3: 0.75rem;
+
+  --size-9: 2.25rem;
+  --font-size-xs: 0.75rem;
+  --spacing-3\.5: 0.875rem;
+
+  --size-11: 2.75rem;
+  --font-size-md: 1rem;
+  --spacing-4\.5: 1.125rem;
+
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border-radius: var(--rounded);
+  white-space: nowrap;
+  font-weight: 600;
+  outline: none;
+  background-color: var(--primary);
+  color: var(--color-white);
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+
+  &--size_xs {
+    height: var(--size-8);
+    min-width: var(--size-8);
+    font-size: var(--font-size-xs);
+    padding: 0 var(--spacing-3);
+    line-height: 1.25rem;
+  }
+
+  &--size_sm {
+    height: var(--size-9);
+    min-width: var(--size-9);
+    font-size: var(--font-size-sm);
+    padding: 0 var(--spacing-3\.5);
+    line-height: 1.25rem;
+  }
+
+  &--size_md {
+    height: var(--size-10);
+    min-width: var(--size-10);
+    font-size: var(--font-size-sm);
+    padding: 0 var(--spacing-4);
+    line-height: 1.25rem;
+  }
+
+  &--size_lg {
+    height: var(--size-11);
+    min-width: var(--size-11);
+    font-size: var(--font-size-md);
+    padding: 0 var(--spacing-4\.5);
+    line-height: 1.25rem;
+  }
+
+  &:hover {
+    background-color: var(--primary-emphasis);
+  }
+
+  &:is(:focus-visible) {
+    outline-offset: 2px;
+    outline-width: 0.125rem;
+    outline-color: var(--primary);
+    outline-style: solid;
+  }
+}
