@@ -4,4 +4,11 @@
   </label>
 }
 
-<ng-content />
+<div
+  class="llama-form-field--wrapper"
+  (click)="_control.onContainerClick($event)"
+  [ngClass]="wrapperClass()">
+  <div class="llama-form-field--element">
+    <ng-content />
+  </div>
+</div>
