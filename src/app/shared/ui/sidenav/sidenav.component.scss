@@ -71,6 +71,7 @@
     height: calc(100vh - 80px);
     overflow-y: scroll;
     overflow-x: hidden;
+    overscroll-behavior: contain;
 
     &-header {
       position: relative;
