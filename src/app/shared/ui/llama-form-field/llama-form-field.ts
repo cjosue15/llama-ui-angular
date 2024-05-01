@@ -2,14 +2,16 @@ import {
   AfterContentInit,
   Component,
   ContentChild,
+  ElementRef,
   InjectionToken,
   ViewEncapsulation,
 } from '@angular/core';
+import { AbstractControlDirective } from '@angular/forms';
+import { NgClass } from '@angular/common';
+
 import { LlamaLabel } from './directives/llama-label';
 import { LlamaFormFieldControl } from './directives/llama-form-field-control';
 import { getLlamaFormFieldMissingControlError } from './directives/llama-form-field-errors';
-import { AbstractControlDirective } from '@angular/forms';
-import { NgClass } from '@angular/common';
 
 export const LLAMA_FORM_FIELD = new InjectionToken<LlamaFormField>(
   'LlamaFormField'
@@ -26,11 +28,14 @@ export const LLAMA_FORM_FIELD = new InjectionToken<LlamaFormField>(
   },
   standalone: true,
   imports: [NgClass],
+  providers: [{ provide: LLAMA_FORM_FIELD, useExisting: LlamaFormField }],
 })
 export class LlamaFormField implements AfterContentInit {
   @ContentChild(LlamaLabel) label: LlamaLabel | null = null;
   @ContentChild(LlamaFormFieldControl)
   _formFieldControl!: LlamaFormFieldControl<any>;
+
+  // TODO: implement ID for label and formfield
 
   get _control(): LlamaFormFieldControl<any> {
     return this._formFieldControl;
@@ -40,6 +45,8 @@ export class LlamaFormField implements AfterContentInit {
     const control = this._control.ngControl;
     return !!(control && control.invalid && control.touched);
   }
+
+  constructor(private _elementRef: ElementRef) {}
 
   ngAfterContentInit() {
     this._assertFormFieldControl();
@@ -62,6 +69,10 @@ export class LlamaFormField implements AfterContentInit {
   getStateInControl(prop: keyof AbstractControlDirective) {
     const control = this._control ? this._control.ngControl : null;
     return control && control[prop];
+  }
+
+  getConnectedOverlayOrigin(): ElementRef {
+    return this._elementRef;
   }
 
   private _assertFormFieldControl() {
