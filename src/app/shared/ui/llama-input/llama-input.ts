@@ -98,7 +98,6 @@ export class LlamaInput
     return this._id;
   }
   set id(value: string) {
-    console.log(value);
     this._id = value || this._uid;
   }
   protected _id = '';
