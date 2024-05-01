@@ -1,0 +1,38 @@
+<div class="llama-select-trigger">
+  <div class="llama-select-value">
+    @if (empty) {
+      <span class="llama-select-placeholder">Placeholder</span>
+    } @else {
+      <span class="llama-select-value-text">{{ valueToDisplay }}</span>
+    }
+  </div>
+
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M6 9l6 6l6 -6" />
+  </svg>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayScrollStrategy]="overlayScrollStrategy"
+  [cdkConnectedOverlayOrigin]="overlayOrigin"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayMinWidth]="overlayWidth"
+  (backdropClick)="closeDropdown()">
+  <div role="listbox" tabindex="-1" class="llama-select-panel">
+    <ng-content />
+  </div>
+</ng-template>
