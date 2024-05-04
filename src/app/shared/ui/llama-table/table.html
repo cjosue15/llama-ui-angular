@@ -1,0 +1,33 @@
+<thead class="llama-table--head">
+  <tr class="llama-table--head-tr">
+    <ng-container
+      *ngTemplateOutlet="
+        headers || defaultHeaderTemplate;
+        context: { $implicit: data }
+      "></ng-container>
+  </tr>
+</thead>
+<tbody class="llama-table--body">
+  @for (row of data; track row) {
+    <tr class="llama-table--body-tr">
+      <ng-container
+        *ngTemplateOutlet="
+          rows || defaultRowTemplate;
+          context: { $implicit: row }
+        "></ng-container>
+    </tr>
+  }
+</tbody>
+
+<!-- If no template is provided use keys as headers and display all values -->
+<ng-template #defaultHeaderTemplate let-data>
+  @for (header of data[0] | keyvalue; track header) {
+    <th>{{ header.key }}</th>
+  }
+</ng-template>
+
+<ng-template #defaultRowTemplate let-row>
+  @for (row of row | keyvalue; track row) {
+    <td>{{ row.value }}</td>
+  }
+</ng-template>

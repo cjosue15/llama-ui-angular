@@ -1,0 +1,36 @@
+.llama-table {
+  width: 100%;
+
+  &--head {
+    text-align: left;
+
+    &-tr {
+      th {
+        font-weight: 600;
+        text-align: left;
+        padding: 0.875rem 1rem;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &--body {
+    vertical-align: top;
+
+    &-tr {
+      td {
+        vertical-align: middle;
+        text-align: left;
+        padding: 1rem;
+        white-space: nowrap;
+        border-bottom: 1px solid var(--color-gray);
+      }
+
+      &:last-child {
+        td {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
