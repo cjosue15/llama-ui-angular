@@ -1,5 +1,5 @@
 .llama-card {
-  display: inline-block;
+  display: flex;
   box-shadow: var(--shadow);
   background: var(--color-white);
   border-radius: var(--rounded);
@@ -7,5 +7,6 @@
   &-content {
     display: block;
     padding: var(--padding);
+    flex: 1;
   }
 }
