@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import {
   LlamaDialogContent,
-  LlamaDialogContainer,
-} from './directives/llama-dialog';
+  LlamaDialogClose,
+  LlamaDialogActions,
+} from './directives/llama-dialog-directives';
 
-const LLAMA_DIALOG_DIRECTIVES = [LlamaDialogContainer, LlamaDialogContent];
+const LLAMA_DIALOG_DIRECTIVES = [
+  LlamaDialogContent,
+  LlamaDialogClose,
+  LlamaDialogActions,
+];
 
 @NgModule({
   imports: [...LLAMA_DIALOG_DIRECTIVES],

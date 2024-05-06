@@ -5,13 +5,27 @@ import {
   OverlayRef,
 } from '@angular/cdk/overlay';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { ComponentRef, Injectable, TemplateRef, inject } from '@angular/core';
-import { LlamaDialogRef } from './llama-dialog-ref';
-import { LlamaDialogContainer } from './directives/llama-dialog';
+import {
+  ComponentRef,
+  Injectable,
+  InjectionToken,
+  Injector,
+  StaticProvider,
+  TemplateRef,
+  inject,
+} from '@angular/core';
 
-export class LlamaDialogConfig extends OverlayConfig {
+import { LlamaDialogRef } from './llama-dialog-ref';
+import { LlamaDialogContainer } from './directives/llama-dialog-container';
+
+export class LlamaDialogConfig<D> extends OverlayConfig {
   disableClose?: boolean = false;
+
+  data?: D;
 }
+
+/** Injection token that can be used to access the data that was passed in to a dialog. */
+export const LLAMA_DIALOG_DATA = new InjectionToken<any>('LlamaDialogData');
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +33,11 @@ export class LlamaDialogConfig extends OverlayConfig {
 export class LlamaDialog {
   private _overlay = inject(Overlay);
 
-  open<T>(
+  private _injector = inject(Injector);
+
+  open<T, D>(
     componentOrTemplate: ComponentType<T> | TemplateRef<T>,
-    config?: LlamaDialogConfig
+    config?: LlamaDialogConfig<D>
   ) {
     const overlayConfig = this._getOverlayConfig(config);
     const overlayRef = this._createOverlay(overlayConfig);
@@ -31,13 +47,18 @@ export class LlamaDialog {
     const dialogContainer = this._attachContainer(overlayRef);
 
     // attach ComponentType or TemplateRef into dialogContainer
-    this._attachDialogContentInContainer(componentOrTemplate, dialogContainer);
+    this._attachDialogContentInContainer(
+      componentOrTemplate,
+      dialogRef,
+      dialogContainer,
+      config
+    );
 
     return dialogRef;
   }
 
-  private _getOverlayConfig(
-    config?: LlamaDialogConfig
+  private _getOverlayConfig<D>(
+    config?: LlamaDialogConfig<D>
   ): OverlayConfig | undefined {
     if (!config) return undefined;
     const positionStrategy = this._overlay
@@ -67,20 +88,35 @@ export class LlamaDialog {
     return overlayConfig;
   }
 
-  private _attachDialogContentInContainer<T>(
+  private _attachDialogContentInContainer<T, D>(
     componentOrTemplate: ComponentType<T> | TemplateRef<T>,
-    dialogContainer: LlamaDialogContainer
+    dialogRef: LlamaDialogRef,
+    dialogContainer: LlamaDialogContainer,
+    config?: LlamaDialogConfig<D>
   ) {
     if (componentOrTemplate instanceof TemplateRef) {
       const template = new TemplatePortal(componentOrTemplate, null!);
       dialogContainer.attachTemplatePortal(template);
     } else {
-      const portal = new ComponentPortal(componentOrTemplate);
+      const injector = this._createInjector(dialogRef, config);
+      const portal = new ComponentPortal(componentOrTemplate, null, injector);
       const contentRef = dialogContainer.attachComponentPortal(portal);
       if (contentRef) {
         this._addClassInHostDialogContent(contentRef);
       }
     }
+  }
+
+  private _createInjector<D>(
+    dialogRef: LlamaDialogRef,
+    config?: LlamaDialogConfig<D>
+  ): Injector {
+    const providers: StaticProvider[] = [
+      { provide: LLAMA_DIALOG_DATA, useValue: config?.data },
+      { provide: LlamaDialogRef, useValue: dialogRef },
+    ];
+
+    return Injector.create({ parent: this._injector, providers });
   }
 
   private _addClassInHostDialogContent<T>(contentRef: ComponentRef<T>) {

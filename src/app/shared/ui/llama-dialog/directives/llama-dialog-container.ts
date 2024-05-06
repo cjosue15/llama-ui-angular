@@ -1,7 +1,6 @@
 import {
   Component,
   ComponentRef,
-  Directive,
   EmbeddedViewRef,
   ViewChild,
   ViewEncapsulation,
@@ -62,10 +61,3 @@ export class LlamaDialogContainer {
     return result;
   }
 }
-
-@Directive({
-  selector: `[llama-dialog-content], llama-dialog-content, [llamaDialogContent]`,
-  host: { class: 'llama-dialog__content' },
-  standalone: true,
-})
-export class LlamaDialogContent {}
