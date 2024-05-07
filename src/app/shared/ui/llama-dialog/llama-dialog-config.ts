@@ -1,5 +1,18 @@
 import { Direction } from '@angular/cdk/bidi';
-import { PositionStrategy, ScrollStrategy } from '@angular/cdk/overlay';
+
+export interface LlamaDialogPosition {
+  /** Override for the dialog's top position. */
+  top?: string;
+
+  /** Override for the dialog's bottom position. */
+  bottom?: string;
+
+  /** Override for the dialog's left position. */
+  left?: string;
+
+  /** Override for the dialog's right position. */
+  right?: string;
+}
 
 export class LlamaDialogConfig<D> {
   /** ID for the dialog. If omitted, a unique one will be generated. */
@@ -35,20 +48,14 @@ export class LlamaDialogConfig<D> {
   /** Max-height of the dialog. If a number is provided, assumes pixel units. */
   maxHeight?: number | string;
 
-  /** Strategy to use when positioning the dialog. Defaults to centering it on the page. */
-  positionStrategy?: PositionStrategy;
+  /** Position overrides. */
+  position?: LlamaDialogPosition;
 
   /** Data being injected into the child component. */
   data?: D | null = null;
 
   /** Layout direction for the dialog's content. */
   direction?: Direction;
-
-  /**
-   * Scroll strategy to be used for the dialog. This determines how
-   * the dialog responds to scrolling underneath the panel element.
-   */
-  scrollStrategy?: ScrollStrategy;
 
   /**
    * Whether the dialog should close when the user navigates backwards or forwards through browser

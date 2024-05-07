@@ -24,7 +24,7 @@ export class DialogRef<D = any, R = any> {
 
   constructor(
     readonly _overlayRef: OverlayRef,
-    readonly _config?: DialogConfig<D, DialogRef<D, R>>
+    readonly _config: DialogConfig<D, DialogRef<D, R>>
   ) {
     this.disableClose = Boolean(_config?.disableClose);
     this.backdropClick$ = _overlayRef.backdropClick();

@@ -1,4 +1,4 @@
-import { ComponentType } from '@angular/cdk/overlay';
+import { ComponentType, Overlay } from '@angular/cdk/overlay';
 import { Injectable, InjectionToken, TemplateRef, inject } from '@angular/core';
 
 import { Dialog } from '@shared/ui/core/dialog/dialog.service';
@@ -15,6 +15,8 @@ export const LLAMA_DIALOG_DATA = new InjectionToken<any>('LlamaDialogData');
 export class LlamaDialog {
   private _dialog = inject(Dialog);
 
+  private _overlay = inject(Overlay);
+
   open<T, D = any, R = any>(
     componentOrTemplate: ComponentType<T> | TemplateRef<T>,
     config?: LlamaDialogConfig<D>
@@ -23,10 +25,16 @@ export class LlamaDialog {
     this._dialog.open<T, D, R>(componentOrTemplate, {
       ...config,
       type: 'dialog',
-      providers(dialogRef, config) {
+      positionStrategy: this._overlay
+        .position()
+        .global()
+        .centerVertically()
+        .centerHorizontally(),
+      providers(dialogRef, cdkConfig) {
         llamaDialogRef = new LlamaDialogRef<D, R>(dialogRef);
+        llamaDialogRef.updatePosition(config?.position);
         return [
-          { provide: LLAMA_DIALOG_DATA, useValue: config.data },
+          { provide: LLAMA_DIALOG_DATA, useValue: cdkConfig.data },
           { provide: LlamaDialogRef, useValue: llamaDialogRef },
         ];
       },

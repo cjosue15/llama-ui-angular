@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs';
 
 import { DialogRef } from '../core/dialog/dialog-ref';
+import { LlamaDialogPosition } from './llama-dialog-config';
+import { GlobalPositionStrategy } from '@angular/cdk/overlay';
 
 export class LlamaDialogRef<D = any, R = any> {
   /** Emits when the backdrop of the dialog is clicked. */
@@ -23,9 +25,32 @@ export class LlamaDialogRef<D = any, R = any> {
     this._dialogRef.close(result);
   }
 
-  /** Updates the position of the dialog based on the current position strategy. */
-  updatePosition(): this {
+  /**
+   * Updates the dialog's position.
+   * @param position New dialog position.
+   */
+  updatePosition(position?: LlamaDialogPosition): this {
+    const strategy = this._dialogRef._config
+      .positionStrategy as GlobalPositionStrategy;
+
+    if (position && (position.left || position.right)) {
+      position.left
+        ? strategy.left(position.left)
+        : strategy.right(position.right);
+    } else {
+      strategy.centerHorizontally();
+    }
+
+    if (position && (position.top || position.bottom)) {
+      position.top
+        ? strategy.top(position.top)
+        : strategy.bottom(position.bottom);
+    } else {
+      strategy.centerVertically();
+    }
+
     this._dialogRef.updatePosition();
+
     return this;
   }
 
