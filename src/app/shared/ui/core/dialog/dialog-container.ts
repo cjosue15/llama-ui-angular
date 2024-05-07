@@ -2,6 +2,7 @@ import {
   Component,
   ComponentRef,
   EmbeddedViewRef,
+  Inject,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -10,6 +11,7 @@ import {
   ComponentPortal,
   TemplatePortal,
 } from '@angular/cdk/portal';
+import { DialogConfig } from './dialog-config';
 
 export function throwDialogContentAlreadyAttachedError() {
   throw Error(
@@ -24,14 +26,20 @@ export function throwDialogContentAlreadyAttachedError() {
       <ng-template cdkPortalOutlet />
     </div>
   `,
-  styleUrl: './llama-dialog.scss',
+  styleUrl: './dialog.scss',
   standalone: true,
-  host: { class: 'llama-dialog__container' },
+  host: {
+    class: 'llama-dialog__container',
+    '[class.llama-dialog-type-dialog]': "config.type ==='dialog'",
+    '[class.llama-dialog-type-drawer]': "config.type ==='drawer'",
+  },
   encapsulation: ViewEncapsulation.None,
   imports: [CdkPortalOutlet],
 })
-export class LlamaDialogContainer {
+export class DialogContainer {
   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
+
+  constructor(@Inject(DialogConfig) readonly config: DialogConfig) {}
 
   /**
    * Attach a ComponentPortal as content to this dialog container.
@@ -43,7 +51,6 @@ export class LlamaDialogContainer {
     }
 
     const result = this.portalOutlet.attachComponentPortal(portal);
-    // this._contentAttached();
     return result;
   }
 
@@ -57,7 +64,6 @@ export class LlamaDialogContainer {
     }
 
     const result = this.portalOutlet.attachTemplatePortal(portal);
-    // this._contentAttached();
     return result;
   }
 }
