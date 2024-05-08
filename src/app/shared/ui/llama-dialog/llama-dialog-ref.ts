@@ -4,8 +4,16 @@ import { Observable } from 'rxjs';
 import { DialogRef } from '@shared/ui/core/dialog/dialog-ref';
 
 import { LlamaDialogPosition } from './llama-dialog-config';
+import { DialogContainer } from '../core/dialog/dialog-container';
+import { LlamaDialogContainer } from './llama-dialog-container';
 
-export class LlamaDialogRef<D = any, R = any> {
+export class LlamaDialogRef<
+  D = any,
+  R = any,
+  C extends DialogContainer = LlamaDialogContainer,
+> {
+  private closeRef: (result?: R) => void = () => {};
+
   /** Emits when the backdrop of the dialog is clicked. */
   get backdropClick$(): Observable<MouseEvent> {
     return this._dialogRef.backdropClick$;
@@ -20,10 +28,21 @@ export class LlamaDialogRef<D = any, R = any> {
     return this._dialogRef.afterClosed$;
   }
 
-  constructor(readonly _dialogRef: DialogRef<D, R>) {}
+  constructor(readonly _dialogRef: DialogRef<D, R, C>) {
+    this.addPanelClass('llama-dialog-panel');
+    this.closeRef = this._dialogRef.close;
+    this._dialogRef.close = () => this.close();
+  }
 
   close(result?: R): void {
-    this._dialogRef.close(result);
+    this._dialogRef._overlayRef.detachBackdrop();
+    const container = this._dialogRef
+      ._containerInstance as unknown as LlamaDialogContainer;
+    container._startExitAnimation();
+
+    setTimeout(() => {
+      this.closeRef.call(this._dialogRef, result);
+    }, container.exitAnimationDuration);
   }
 
   /**

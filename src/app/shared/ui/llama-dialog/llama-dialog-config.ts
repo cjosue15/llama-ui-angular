@@ -63,4 +63,8 @@ export class LlamaDialogConfig<D> {
    * routing (`HashLocationStrategy` in the Angular router).
    */
   closeOnNavigation?: boolean = true;
+
+  startAnimationDuration?: string | number;
+
+  exitAnimationDuration?: string | number;
 }
