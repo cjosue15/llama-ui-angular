@@ -127,7 +127,7 @@ export class Dialog {
 
   private _addClassInHostDialogContent<T>(contentRef: ComponentRef<T>) {
     (contentRef.location.nativeElement as HTMLElement).classList.add(
-      'llama-dialog-host'
+      'llama-dialog-component-host'
     );
   }
 
