@@ -1,0 +1,81 @@
+<div>
+  <h1>Llama Card</h1>
+  <llama-card>
+    <llama-card-content>
+      <p>dashboard-analytics works!</p>
+    </llama-card-content>
+  </llama-card>
+</div>
+<div>
+  <h1>Llama Buttons</h1>
+  <button llama-button size="xs">Click me!</button>
+  <button llama-button size="sm">Click me!</button>
+  <button llama-button>Click me!</button>
+  <button llama-button size="lg">Click me!</button>
+</div>
+
+<llama-card>
+  <llama-card-content>
+    <div>
+      <llama-form-field>
+        <llama-label>Label</llama-label>
+        <input [formControl]="control" llamaInput type="text" />
+      </llama-form-field>
+    </div>
+    <div>
+      <llama-form-field>
+        <input llamaInput type="text" />
+      </llama-form-field>
+    </div>
+
+    <div>
+      <!-- <llama-form-field> -->
+      <!--   <llama-label>Select</llama-label> -->
+      <!--   <llama-select [(value)]="selected"> -->
+      <!--     <!-- <llama-select [formControl]="animalControl"> -->
+      <!--     @for (animal of animals; track animal) { -->
+      <!--       <llama-option [value]="animal">{{ animal.name }}</llama-option> -->
+      <!--     } -->
+      <!--   </llama-select> -->
+      <!-- </llama-form-field> -->
+
+      <!-- multiple -->
+      <llama-form-field>
+        <llama-label>Select</llama-label>
+        <llama-select [multiple]="true" [(value)]="selectedMultiples">
+          @for (animal of animals; track animal) {
+            <llama-option [value]="animal">{{ animal.name }}</llama-option>
+          }
+        </llama-select>
+      </llama-form-field>
+    </div>
+  </llama-card-content>
+</llama-card>
+
+<llama-card>
+  <llama-card-content>
+    <table llama-table [data]="employees"></table>
+
+    <!-- Highly configured template with conditional elements -->
+    <table llama-table [data]="inventory">
+      <ng-template #headers>
+        <th>Item</th>
+        <th>Price</th>
+        <th></th>
+        <th></th>
+      </ng-template>
+      <ng-template #rows let-row>
+        <td>{{ row.name }}</td>
+        <td>{{ row.price | currency: row.currency }}</td>
+        <td>
+          @if (row.inStock > 0) {
+            <button (click)="purchaseItem(row.plu)">Buy now</button>
+          }
+        </td>
+        <td>
+          <button>Delete</button>
+        </td>
+      </ng-template>
+    </table>
+  </llama-card-content>
+</llama-card>
