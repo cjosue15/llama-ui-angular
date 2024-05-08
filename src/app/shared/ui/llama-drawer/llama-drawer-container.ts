@@ -65,7 +65,6 @@ export class LlamaDrawerContainer extends DialogContainer {
     @Inject(LlamaDrawerConfig) readonly llamaConfig?: LlamaDrawerConfig<any>
   ) {
     super(elementRef, config);
-    console.log(!llamaConfig?.position || llamaConfig?.position?.right);
   }
 
   protected override _contentAttached(): void {
