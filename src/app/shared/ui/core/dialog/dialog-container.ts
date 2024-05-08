@@ -21,31 +21,12 @@ export function throwDialogContentAlreadyAttachedError() {
   );
 }
 
-const TRANSITION_DURATION_PROPERTY = '--llama-dialog-transition-duration';
-const OPEN_CLASS = 'llama-dialog--open';
-const CLOSE_CLASS = 'llama-dialog--close';
-
-/** Duration of the opening animation in milliseconds. */
-export const OPEN_ANIMATION_DURATION = 150;
-
-/** Duration of the closing animation in milliseconds. */
-export const CLOSE_ANIMATION_DURATION = 150;
-
 @Component({
-  selector: `llama-dialog-container`,
-  template: `
-    <div class="llama-dialog-container">
-      <div class="llama-dialog__surface">
-        <ng-template cdkPortalOutlet />
-      </div>
-    </div>
-  `,
-  styleUrl: './dialog.scss',
+  selector: `llama-core-dialog-container`,
+  template: ` <ng-template cdkPortalOutlet /> `,
   standalone: true,
   host: {
     class: 'llama-dialog__container',
-    '[class.llama-dialog-type-dialog]': "config.type ==='dialog'",
-    '[class.llama-dialog-type-drawer]': "config.type ==='drawer'",
   },
   encapsulation: ViewEncapsulation.None,
   imports: [CdkPortalOutlet],
@@ -57,27 +38,13 @@ export class DialogContainer {
     return this.elementRef.nativeElement as HTMLDivElement;
   }
 
-  get startAnimationDuration() {
-    return (
-      parseCssTime(this.config.startAnimationDuration) ??
-      OPEN_ANIMATION_DURATION
-    );
-  }
-
-  get exitAnimationDuration() {
-    return (
-      parseCssTime(this.config.exitAnimationDuration) ??
-      CLOSE_ANIMATION_DURATION
-    );
-  }
-
   constructor(
     private elementRef: ElementRef,
     @Inject(DialogConfig) readonly config: DialogConfig
   ) {}
 
   protected _contentAttached() {
-    this._startOpenAnimation();
+    // TODO: focus when the dialog is opened
   }
 
   /**
@@ -107,30 +74,9 @@ export class DialogContainer {
     this._contentAttached();
     return result;
   }
-
-  /** Starts the dialog open animation if enabled. */
-  private _startOpenAnimation() {
-    this.hostElement.style.setProperty(
-      TRANSITION_DURATION_PROPERTY,
-      `${this.startAnimationDuration}ms`
-    );
-
-    this.hostElement.classList.add(OPEN_CLASS);
-  }
-
-  _startExitAnimation() {
-    this.hostElement.classList.remove(OPEN_CLASS);
-
-    this.hostElement.style.setProperty(
-      TRANSITION_DURATION_PROPERTY,
-      `${this.exitAnimationDuration}ms`
-    );
-
-    this.hostElement.classList.add(CLOSE_CLASS);
-  }
 }
 
-function parseCssTime(time: string | number | undefined): number | null {
+export function parseCssTime(time: string | number | undefined): number | null {
   if (time == null) {
     return null;
   }

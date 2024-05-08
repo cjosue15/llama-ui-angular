@@ -1,10 +1,13 @@
 import { Direction } from '@angular/cdk/bidi';
 import { PositionStrategy, ScrollStrategy } from '@angular/cdk/overlay';
-import { StaticProvider } from '@angular/core';
+import { StaticProvider, Type } from '@angular/core';
+import { DialogContainer } from './dialog-container';
 
-type DialogType = 'dialog' | 'drawer';
-
-export class DialogConfig<D = unknown, R = unknown> {
+export class DialogConfig<
+  D = unknown,
+  R = unknown,
+  C extends DialogContainer = DialogContainer,
+> {
   /** ID for the dialog. If omitted, a unique one will be generated. */
   id?: string;
 
@@ -78,15 +81,18 @@ export class DialogConfig<D = unknown, R = unknown> {
   closeOnOverlayDetachments?: boolean = true;
 
   /**
+   * Component into which the dialog content will be rendered. Defaults to `CdkDialogContainer`.
+   * A configuration object can be passed in to customize the providers that will be exposed
+   * to the dialog container.
+   */
+  container!: {
+    type: Type<C>;
+    providers: (config: DialogConfig<D, R, C>) => StaticProvider[];
+  };
+
+  /**
    * Providers that will be exposed to the contents of the dialog. Can also
    * be provided as a function in order to generate the providers lazily.
    */
-  providers!: (dialogRef: R, config: DialogConfig<D, R>) => StaticProvider[];
-
-  // TODO: Delete dialog type
-  type: DialogType = 'dialog';
-
-  startAnimationDuration?: string | number;
-
-  exitAnimationDuration?: string | number;
+  providers!: (dialogRef: R, config: DialogConfig<D, R, C>) => StaticProvider[];
 }
