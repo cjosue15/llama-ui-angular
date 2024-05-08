@@ -53,6 +53,7 @@ export class DialogConfig<D = unknown, R = unknown> {
    */
   scrollStrategy?: ScrollStrategy;
 
+  // TODO: implement
   /**
    * Whether the dialog should close when the user navigates backwards or forwards through browser
    * history. This does not apply to navigation via anchor element unless using URL-hash based
@@ -60,12 +61,14 @@ export class DialogConfig<D = unknown, R = unknown> {
    */
   closeOnNavigation?: boolean = true;
 
+  // TODO: implement
   /**
    * Whether the dialog should close when the dialog service is destroyed. This is useful if
    * another service is wrapping the dialog and is managing the destruction instead.
    */
   closeOnDestroy?: boolean = true;
 
+  // TODO: implement
   /**
    * Whether the dialog should close when the underlying overlay is detached. This is useful if
    * another service is wrapping the dialog and is managing the destruction instead. E.g. an
@@ -79,9 +82,11 @@ export class DialogConfig<D = unknown, R = unknown> {
    * be provided as a function in order to generate the providers lazily.
    */
   providers!: (dialogRef: R, config: DialogConfig<D, R>) => StaticProvider[];
-  // providers?:
-  //   | StaticProvider[]
-  //   | ((dialogRef: R, config: DialogConfig<D, R>) => StaticProvider[]);
 
+  // TODO: Delete dialog type
   type: DialogType = 'dialog';
+
+  startAnimationDuration?: string | number;
+
+  exitAnimationDuration?: string | number;
 }

@@ -1,8 +1,9 @@
+import { GlobalPositionStrategy } from '@angular/cdk/overlay';
 import { Observable } from 'rxjs';
 
-import { DialogRef } from '../core/dialog/dialog-ref';
+import { DialogRef } from '@shared/ui/core/dialog/dialog-ref';
+
 import { LlamaDialogPosition } from './llama-dialog-config';
-import { GlobalPositionStrategy } from '@angular/cdk/overlay';
 
 export class LlamaDialogRef<D = any, R = any> {
   /** Emits when the backdrop of the dialog is clicked. */

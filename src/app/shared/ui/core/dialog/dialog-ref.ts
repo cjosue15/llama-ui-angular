@@ -1,8 +1,11 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { DialogConfig } from './dialog-config';
+import { DialogContainer } from './dialog-container';
 
 export class DialogRef<D = any, R = any> {
+  _containerInstance: DialogContainer | null = null;
+
   readonly disableClose: boolean;
 
   /** Emits when the backdrop of the dialog is clicked. */
@@ -46,12 +49,18 @@ export class DialogRef<D = any, R = any> {
   }
 
   close(result?: R): void {
-    this._destroy$.next();
-    this._destroy$.complete();
-    this._overlayRef.dispose();
+    this._overlayRef.detachBackdrop();
+    this._containerInstance?._startExitAnimation();
 
-    this.closed.next(result);
-    this.closed.complete();
+    setTimeout(() => {
+      this._destroy$.next();
+      this._destroy$.complete();
+      this._overlayRef.dispose();
+
+      this.closed.next(result);
+      this.closed.complete();
+      this._containerInstance = null;
+    }, this._containerInstance!.exitAnimationDuration);
   }
 
   /** Updates the position of the dialog based on the current position strategy. */

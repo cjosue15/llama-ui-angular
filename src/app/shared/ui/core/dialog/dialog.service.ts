@@ -36,6 +36,7 @@ export class Dialog {
 
     // attach container into LlamaDialog
     const dialogContainer = this._attachContainer(overlayRef, config);
+    dialogRef._containerInstance = dialogContainer;
 
     // attach ComponentType or TemplateRef into dialogContainer
     this._attachDialogContentInContainer(
