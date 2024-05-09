@@ -22,6 +22,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 
 import { sidenavAnimations } from '@shared/animations';
 import { MenuItem } from '@shared/interfaces/sidenav';
+import { LayoutService } from '@shared/data-access/layout/layout.service';
 
 @Component({
   selector: 'li[app-sidenav-item]',
@@ -50,6 +51,8 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   private changeDetectorRef = inject(ChangeDetectorRef);
 
   private unsuscribe$ = new Subject<void>();
+
+  private layoutService = inject(LayoutService);
 
   ngOnInit(): void {
     this.router.events
@@ -80,5 +83,11 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   toggleOpen(): void {
     if (!this.menuItem.children || this.menuItem.children.length === 0) return;
     this.state.set(this.state() === 'expanded' ? 'collapsed' : 'expanded');
+  }
+
+  handleRoute(): void {
+    if (this.layoutService.isMobile()) {
+      this.layoutService.toggleSidenav('hidden');
+    }
   }
 }
