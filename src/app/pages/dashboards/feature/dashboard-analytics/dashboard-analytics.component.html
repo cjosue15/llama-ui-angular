@@ -54,28 +54,36 @@
 
 <llama-card>
   <llama-card-content>
-    <table llama-table [data]="employees"></table>
+    <div class="llama-table-mobile">
+      <table llama-table [data]="employees"></table>
+    </div>
+  </llama-card-content>
+</llama-card>
 
+<llama-card>
+  <llama-card-content>
     <!-- Highly configured template with conditional elements -->
-    <table llama-table [data]="inventory">
-      <ng-template #headers>
-        <th>Item</th>
-        <th>Price</th>
-        <th></th>
-        <th></th>
-      </ng-template>
-      <ng-template #rows let-row>
-        <td>{{ row.name }}</td>
-        <td>{{ row.price | currency: row.currency }}</td>
-        <td>
-          @if (row.inStock > 0) {
-            <button (click)="purchaseItem(row.plu)">Buy now</button>
-          }
-        </td>
-        <td>
-          <button>Delete</button>
-        </td>
-      </ng-template>
-    </table>
+    <div class="llama-table-mobile">
+      <table llama-table [data]="inventory">
+        <ng-template #headers>
+          <th>Item</th>
+          <th>Price</th>
+          <th></th>
+          <th></th>
+        </ng-template>
+        <ng-template #rows let-row>
+          <td>{{ row.name }}</td>
+          <td>{{ row.price | currency: row.currency }}</td>
+          <td>
+            @if (row.inStock > 0) {
+              <button (click)="purchaseItem(row.plu)">Buy now</button>
+            }
+          </td>
+          <td>
+            <button>Delete</button>
+          </td>
+        </ng-template>
+      </table>
+    </div>
   </llama-card-content>
 </llama-card>

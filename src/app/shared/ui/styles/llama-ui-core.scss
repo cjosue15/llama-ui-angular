@@ -32,3 +32,9 @@
     max-width: inherit;
   }
 }
+
+.llama-table-mobile {
+  min-width: 100%;
+  width: 1px;
+  overflow: auto;
+}
