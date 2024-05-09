@@ -1,6 +1,10 @@
 .cdk-overlay-pane.llama-dialog-panel {
   max-width: 560px;
   min-width: 280px;
+
+  @media (width <= 599px) {
+    max-width: calc(100vw - 32px);
+  }
 }
 
 .llama-dialog {
