@@ -47,7 +47,10 @@
   <ul [@menuExpansion]="state()" class="llama-sidenav-item__children">
     @for (subitem of menuItem.children; track subitem) {
       <li>
-        <a [routerLink]="subitem.link" routerLinkActive="active">
+        <a
+          [routerLink]="subitem.link"
+          routerLinkActive="active"
+          (click)="handleRoute()">
           <div class="llama-sidenav-child-container">
             <span>{{ subitem.title }}</span>
           </div>
