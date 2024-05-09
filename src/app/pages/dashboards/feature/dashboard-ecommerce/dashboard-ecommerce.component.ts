@@ -190,7 +190,6 @@ export default class DashboardEcommerceComponent {
       hasBackdrop: true,
       disableClose: false,
       width: '700px',
-      maxWidth: '100%',
       backdropClass: 'cdk-overlay-dark-backdrop',
       data: { test: 'holi' },
     });
